@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/nfs/2016/m/mkyianyt/Piscine_CPP/rush_00/AEntities.cpp
+AEntities.hpp
+/nfs/2016/m/mkyianyt/Piscine_CPP/rush_00/AEntities.hpp
+
+/nfs/2016/m/mkyianyt/Piscine_CPP/rush_00/AEntities.hpp
+iostream
+-
+ncurses.h
+-
+
+/nfs/2016/m/mkyianyt/Piscine_CPP/rush_00/Player.cpp
+Player.hpp
+/nfs/2016/m/mkyianyt/Piscine_CPP/rush_00/Player.hpp
+
+/nfs/2016/m/mkyianyt/Piscine_CPP/rush_00/Player.hpp
+AEntities.hpp
+/nfs/2016/m/mkyianyt/Piscine_CPP/rush_00/AEntities.hpp
+
+/nfs/2016/m/mkyianyt/Piscine_CPP/rush_00/main.cpp
+AEntities.hpp
+/nfs/2016/m/mkyianyt/Piscine_CPP/rush_00/AEntities.hpp
+Player.hpp
+/nfs/2016/m/mkyianyt/Piscine_CPP/rush_00/Player.hpp
+
