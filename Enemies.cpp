@@ -1,14 +1,16 @@
 #include "Enemies.hpp"
 
+bool	Enemies::_flag = true;
+
 Enemies::Enemies() : AEntities() {
 	this->_x = rand() % W;
 	this->_y = 0;
 	this->_type = '*';
 }
-Enemies::Enemies(int x, int y) : AEntities(x, y) {
+Enemies::Enemies(int x, int y, char type) : AEntities(x, y) {
 	this->_x = rand() % W;
 	this->_y = 0;
-	this->_type = '*';
+	this->_type = type;
 }
 Enemies::Enemies(Enemies const &rhs) : AEntities(rhs) {
 	this->_x = rhs.getY();
@@ -27,15 +29,48 @@ Enemies const & Enemies::operator=(Enemies const &rhs) {
 	return *this;
 }
 
+bool	Enemies::getFlag() {
+	return Enemies::_flag;
+}
+
+void	Enemies::setFlag() {
+	if (Enemies::_flag)
+		Enemies::_flag = false;
+	else
+		Enemies::_flag = true;
+}
+
+void	Enemies::initArray() {
+	for (int i = 0; i < 50; ++i)
+		enemiesArray[i] = NULL;
+}
+
+void	Enemies::createEnemy() {
+	if (getFlag()) {
+		initArray();
+		setFlag();
+	}
+	for (int i = 0; i < 50; ++i)
+	{
+		if (enemiesArray[i] == NULL) {
+			enemiesArray[i] = new Enemies(0, 0, _type);
+			return;
+		}
+	}
+}
+
 void	Enemies::move(int x, int y) {
-	setX(x);
-	setY(y);
-//	if (this->getX() >= W1)
-//		this->_x = W-2;
-//	if (this->getY() >= H1)
-//		this->_y = H-2;
-//	if ( this->getX() <= 1)
-//		this->_x = 1;
-//	if (this->getY() <= 1)
-//		this->_y = 1;
+	for (int i = 0; i < 50; ++i)
+	{
+		if (enemiesArray[i])
+		{
+			enemiesArray[i]->setY(y);
+			enemiesArray[i]->setX(x);
+			if (enemiesArray[i]->getY() == H)
+			{
+				delete enemiesArray[i];
+				enemiesArray[i] = new Enemies();
+			}
+		}
+	}
 }

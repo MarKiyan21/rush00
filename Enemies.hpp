@@ -7,16 +7,21 @@ class Enemies : public AEntities {
 
 public:
 	Enemies(void);
-	Enemies(int x, int y);
+	Enemies(int x, int y, char type);
 	Enemies(Enemies const &);
 
 	~Enemies(void);
 
 	Enemies const	&operator=(Enemies const &rhs);
 	void	move(int x, int y);
-//	Enemies*	newEnemies();
+	Enemies	*enemiesArray[50];
+	void	initArray();
+	void	createEnemy();
+	bool	getFlag();
+	void	setFlag();
 
 private:
+	static bool	_flag;
 
 };
 

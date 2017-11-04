@@ -143,23 +143,25 @@ void	make_frame(WINDOW * win, int maxheight, int maxwidth, char oldalchar)
 //	}
 //}
 
-int main(int argc, char const *argv[])
+int main()
 {
 	Player	player = Player();
+
 	int maxheight;
 	int maxwidth;
 	int t_maxh;
 	int t_maxw;
 	int	c = 0;
 
+	//Enemies listEnemies[50];
+	Enemies	enemies = Enemies();
 	initscr();
 	WINDOW * win = newwin(H, W, 0, 0);
 	nodelay(stdscr,true);
 	noecho();
 	while (c != 27)
 	{
-		Enemies	enemies = Enemies();
-//		while (enemies.getY() > )
+		enemies.createEnemy();
 		enemies.move(enemies.getX(), 1);
 		c = getch();
 
@@ -186,7 +188,14 @@ int main(int argc, char const *argv[])
 
 		make_clean_win(win, maxheight, maxwidth, ' ');
 		mvwaddch(win, player.getY(), player.getX(), *player.getType());
-		mvwaddch(win, enemies.getY(), enemies.getX(), *enemies.getType());
+		for (int i = 0; i < 50; ++i)
+		{
+			if (enemies.enemiesArray[i])
+				mvwaddch(win, enemies.enemiesArray[i]->getY(), enemies.enemiesArray[i]->getX(), '*');
+			else
+				break;
+
+		}
 		make_frame(win, maxheight, maxwidth, '$');
 
 		usleep(100000);
