@@ -13,15 +13,10 @@ public:
 	~Bullets(void);
 
 	Bullets const	&operator=(Bullets const &rhs);
-	void	move(int, int, int, int);
+	void	move(int, int);
 	Bullets	*bulletsArray[200];
 	void	initArray();
 	void	createArray(int, int);
-	bool	getFlag();
-	void	setFlag();
-
-private:
-	static bool	_flag;
 
 };
 

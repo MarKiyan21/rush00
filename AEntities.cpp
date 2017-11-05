@@ -31,14 +31,10 @@ void	AEntities::setY(int y) {
 	this->_y += y;
 }
 
-//bool	AEntities::getLive() const {
-//	this->_live;
-//}
-//
 char *	AEntities::getType() {
 	return &this->_type;
 }
 
 bool	AEntities::collision(AEntities &elem) {
-	return (_x == elem.getX() && _y == elem.getY());
+	return ((_x == elem.getX() && _y == elem.getY()) || (_x == elem.getX() && _y == elem.getY() + 1));
 }

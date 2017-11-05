@@ -58,3 +58,11 @@ void	Player::setCHP(int number) {
 int		Player::getCHP() const {
 	return this->_cHP;
 }
+
+void	Player::setPoints(int n) {
+	this->_points += n;
+}
+int 	Player::getPoints(void) const
+{
+	return (this->_points);
+}

@@ -20,14 +20,13 @@ public:
 	virtual ~AEntities(void);
 
 	AEntities const	&operator=(AEntities const &rhs);
-//	virtual void	move(int x, int y) = 0;
+	virtual void	move(int x, int y) = 0;
 	bool			collision(AEntities &);
 	int				getX(void) const;
 	int				getY(void) const;
 	void			setX(int x);
 	void			setY(int y);
 	char *			getType(void);
-//	bool			getLive(void) const;
 
 protected:
 	int		_x;

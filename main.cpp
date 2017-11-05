@@ -55,7 +55,10 @@ void	init_color(void)
 {
 	start_color();
 	init_pair(1, COLOR_RED, 6);
-	init_pair(2, 4, 6);
+	init_pair(2, 5, 2);
+	init_pair(3, 3, 6);
+	init_pair(4, 4, 6);
+	init_pair(5, 0, 6);
 }
 
 void	max_win(int *maxheight, int *maxwidth)
@@ -123,6 +126,7 @@ int		main()
 	int	c = 0;
 	int timer = 0;
 	char buf[10];
+	int rhp;
 
 	initscr();
 	WINDOW * win = newwin(H, W, 0, 0);
@@ -140,18 +144,37 @@ int		main()
 
 //		if (c == 32)
 //			bullets.createArray(player.getX(), player.getY() - 1);
-		enemies.move(0, 1);
+//		if (timer % 10 == 0)
+//			enemies.move(0, 1);
+
+
+//		if (timer % 15 == 0)
+//		{
+//			enemies.move(0, 1);
+//			usleep(100);
+//		}
+
+
+		if (timer % 2 == 0)
+		{
+			enemies.move(0, 1);
+			usleep(50000);
+		}
+
 
 		c = getch();
 
-		if (c == 97 || c == 260)
-			player.move(-1, 0);
-		else if (c == 100 || c == 261)
-			player.move(1, 0);
-		else if (c == 119 || c == 259)
-			player.move(0, -1);
-		else if (c == 115 || c == 258)
-			player.move(0, 1);
+//		if (timer % 2 == 0)
+//		{
+			if (c == 97 || c == 260)
+				player.move(-1, 0);
+			else if (c == 100 || c == 261)
+				player.move(1, 0);
+			else if (c == 119 || c == 259)
+				player.move(0, -1);
+			else if (c == 115 || c == 258)
+				player.move(0, 1);
+//		}
 
 		max_win(&maxheight, &maxwidth);
 
@@ -159,41 +182,113 @@ int		main()
 
 		if (c == 32)
 			bullets.createArray(player.getX(), player.getY());
-		bullets.move(0, 0, player.getX(), player.getY());
+		if (timer % 2 == 0)
+			bullets.move(0, 0);
 
 		make_clean_win(win, maxheight, maxwidth, ' ');
-		mvwaddch(win, player.getY(), player.getX(), *player.getType());
 		for (int i = 0; i < 50; ++i)
 		{
 			if (enemies.enemiesArray[i]) {
-				if (enemies.enemiesArray[i]->collision(player)) {
+				if (*enemies.enemiesArray[i]->getType() != '.' && enemies.enemiesArray[i]->collision(player)) {
 					delete enemies.enemiesArray[i];
 					enemies.enemiesArray[i] = new Enemies();
 					player.setCHP(-20);
-//					if (player.getCHP() == 0)  сделать выход из игры
-//						exit(0);
+					if (player.getCHP() <= 0) {
+						while (1) {
+//
+							c = getch();
+
+
+							wattron(win,COLOR_PAIR(2));
+
+							make_clean_win(win, maxheight, maxwidth, ' ');
+							make_frame(win, maxheight, maxwidth, '$');
+//
+							mvwprintw(win, 0, 40, "time:");
+							mvwprintw(win, 0, 45, ft_itoa(timer, buf));
+							mvwprintw(win, 0, 60, "score:");
+							mvwprintw(win, 0, 66, ft_itoa(player.getPoints(), buf));
+							mvwprintw(win, 0, 80, "hp:");
+							mvwprintw(win, 0, 83, ft_itoa(player.getCHP(), buf));
+
+							mvwprintw(win,H/2, W/2, "GAME OVER");
+							mvwprintw(win,H/2 + 1, W/2 - 3, "PRESS ESC TO EXIT");
+							mvwprintw(win,H/2 + 2, W/2 - 3, "PRESS r TO RETRY");
+							wrefresh(win);
+
+							if (c == 27) {
+								endwin();
+								exit(0);
+							}
+							if (c == 114)
+							{
+								timer = 0;
+								rhp = player.getCHP() * -1 + 100;
+								player.setCHP(rhp);
+								rhp = player.getPoints();
+								player.setPoints(-rhp);
+								rhp = -player.getX() + W / 2;
+								player.setX(rhp);
+								rhp = -player.getY() + H -2;
+								player.setY(rhp);
+								enemies.initArray();
+								bullets.initArray();
+								make_clean_win(win, maxheight, maxwidth, ' ');
+								make_frame(win, maxheight, maxwidth, '$');
+								break;
+							}
+						}
+
+					}
 				}
 				else
 					mvwaddch(win, enemies.enemiesArray[i]->getY(), enemies.enemiesArray[i]->getX(), *enemies.enemiesArray[i]->getType());
 			}
-			else
-				break;
 
 		}
+
+		mvwaddch(win, player.getY(), player.getX(), *player.getType());
+
 		for (int j = 0; j < 200; ++j) {
 			if (bullets.bulletsArray[j])
-				mvwaddch(win, bullets.bulletsArray[j]->getY(), bullets.bulletsArray[j]->getX(), *bullets.bulletsArray[j]->getType());
-			else
-				break;
+				for (int k = 0; k < 50; ++k) {
+					if (enemies.enemiesArray[k]) {
+						if (*enemies.enemiesArray[k]->getType() != '.' && bullets.bulletsArray[j]->collision(*enemies.enemiesArray[k])) {
+							player.setPoints(5);
+							delete enemies.enemiesArray[k];
+							enemies.enemiesArray[k] = new Enemies();
+							delete bullets.bulletsArray[j];
+							bullets.bulletsArray[j] = NULL;
+							break;
+						}
+						else
+							mvwaddch(win, bullets.bulletsArray[j]->getY(), bullets.bulletsArray[j]->getX(), *bullets.bulletsArray[j]->getType());
+					}
+				}
+
 		}
 		make_frame(win, maxheight, maxwidth, '$');
-//
+
+		wattroff(win,COLOR_PAIR(1));
+
+
+		wattron(win,COLOR_PAIR(3));
 		mvwprintw(win, 0, 40, "time:");
 		mvwprintw(win, 0, 45, ft_itoa(timer, buf));
+		wattroff(win,COLOR_PAIR(3));
+
+		wattron(win,COLOR_PAIR(4));
+		mvwprintw(win, 0, 60, "score:");
+		mvwprintw(win, 0, 66, ft_itoa(player.getPoints(), buf));
+		wattroff(win,COLOR_PAIR(4));
+
+
+		wattron(win,COLOR_PAIR(5));
 		mvwprintw(win, 0, 80, "hp:");
 		mvwprintw(win, 0, 83, ft_itoa(player.getCHP(), buf));
-		wattroff(win,COLOR_PAIR(1));
-		usleep(100000);
+		wattroff(win,COLOR_PAIR(5));
+
+		usleep(10000);
 		timer += 1;
 		refresh();
 		wrefresh(win);

@@ -16,6 +16,8 @@ public:
 	void	move(int x, int y);
 	int		getCHP(void) const;
 	void	setCHP(int);
+	void	setPoints(int);
+	int 	getPoints(void) const;
 
 private:
 	int		_cHP;

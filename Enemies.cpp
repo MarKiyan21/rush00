@@ -3,21 +3,56 @@
 bool	Enemies::_flag = true;
 
 Enemies::Enemies() : AEntities() {
-	char	tab[2] = {'*', '^'};
+	char	tab[3] = {'.', '*', '^'};
 	this->_x = rand() % W;
 	this->_y = 0;
-	this->_type = tab[rand() % 2];
+	this->_type = tab[rand() % 3];
+	if(_type == '*')
+		_n = 1;
+	else if(_type == '^')
+		_n = 2;
+	else
+		_n = 0;
+
+
+
 }
+
+
+
+
 Enemies::Enemies(int x, int y) : AEntities(x, y) {
-	char	tab[2] = {'*', '^'};
+//	char	tab[2] = {'*', '^'};
+////	int 	n;
+//
+//
+//	this->_x = rand() % W;
+//	this->_y = 0;
+//	this->_type = tab[rand() % 2];
+//	if(_type == '*')
+//		_n = 1;
+//	if(_type == '^')
+//		_n = 2;
+////	_n = n;
+
+	char	tab[3] = {'.', '*', '^'};
 	this->_x = rand() % W;
 	this->_y = 0;
-	this->_type = tab[rand() % 2];
+	this->_type = tab[rand() % 3];
+	if(_type == '*')
+		_n = 1;
+	else if(_type == '^')
+		_n = 2;
+	else
+		_n = 0;
+
+
 }
 Enemies::Enemies(Enemies const &rhs) : AEntities(rhs) {
 	this->_x = rhs.getY();
 	this->_y = rhs.getY();
 	this->_type = rhs._type;
+	this->_n = rhs._n;
 }
 
 Enemies::~Enemies() {}
@@ -59,6 +94,10 @@ void	Enemies::createArray() {
 			return;
 		}
 	}
+}
+
+int		Enemies::getN() {
+	return this->_n;
 }
 
 void	Enemies::move(int x, int y) {

@@ -18,10 +18,12 @@ public:
 	void	initArray();
 	void	createArray();
 	bool	getFlag();
+	int		getN();
 	void	setFlag();
 
 private:
 	static bool	_flag;
+	int 		_n;
 
 };
 
