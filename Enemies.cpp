@@ -3,14 +3,16 @@
 bool	Enemies::_flag = true;
 
 Enemies::Enemies() : AEntities() {
+	char	tab[2] = {'*', '^'};
 	this->_x = rand() % W;
 	this->_y = 0;
-	this->_type = '*';
+	this->_type = tab[rand() % 2];
 }
-Enemies::Enemies(int x, int y, char type) : AEntities(x, y) {
+Enemies::Enemies(int x, int y) : AEntities(x, y) {
+	char	tab[2] = {'*', '^'};
 	this->_x = rand() % W;
 	this->_y = 0;
-	this->_type = type;
+	this->_type = tab[rand() % 2];
 }
 Enemies::Enemies(Enemies const &rhs) : AEntities(rhs) {
 	this->_x = rhs.getY();
@@ -46,7 +48,6 @@ void	Enemies::initArray() {
 }
 
 void	Enemies::createEnemy() {
-	char	type[2] = {'*', '^'};
 	if (getFlag()) {
 		initArray();
 		setFlag();
@@ -54,7 +55,7 @@ void	Enemies::createEnemy() {
 	for (int i = 0; i < 50; ++i)
 	{
 		if (enemiesArray[i] == NULL) {
-			enemiesArray[i] = new Enemies(0, 0, type[rand() % 2]);
+			enemiesArray[i] = new Enemies(0, 0);
 			return;
 		}
 	}
@@ -76,16 +77,16 @@ void	Enemies::move(int x, int y) {
 	}
 }
 
-void	Enemies::bam(int index) {
-	for (int i = 0; i < 50; ++i)
-	{
-		if (enemiesArray[i])
-			if (i == index) {
-				delete enemiesArray[i];
-				enemiesArray[i] = new Enemies();
-			}
-	}
-}
+//void	Enemies::bam(int index) {
+////	for (int i = 0; i < 50; ++i)
+////	{
+//		if (enemiesArray[index]) {
+////			if (i == index) {
+//				delete enemiesArray[index];
+//				enemiesArray[index] = new Enemies();
+//		}
+////	}
+//}
 
 //bool	Enemies::collision(Player* &elem) {
 //	return (_x == elem->getX() && _y == elem->getY());

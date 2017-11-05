@@ -14,6 +14,7 @@ public:
 
 	Player const	&operator=(Player const &rhs);
 	void	move(int x, int y);
+//	int		get
 
 private:
 	int		_cHP;

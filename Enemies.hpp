@@ -8,7 +8,7 @@ class Enemies : public AEntities {
 
 public:
 	Enemies(void);
-	Enemies(int x, int y, char type);
+	Enemies(int x, int y);
 	Enemies(Enemies const &);
 
 	~Enemies(void);
@@ -19,7 +19,7 @@ public:
 	void	initArray();
 	void	createEnemy();
 //	bool	collision(Player*&);
-	void	bam(int);
+//	void	bam(int);
 	bool	getFlag();
 	void	setFlag();
 

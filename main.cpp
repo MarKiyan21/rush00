@@ -162,15 +162,7 @@ int main()
 	{
 		enemies.createEnemy();
 		enemies.move(0, 1);
-		for (int j = 0; j < 50; ++j)
-		{
-			if (enemies.enemiesArray[j] == NULL)
-				break;
-			if (enemies.enemiesArray[j]->collision(player)) {
-				enemies.enemiesArray[j]->bam(j);
-				//добавить на уменьшение здоровья игрока
-			}
-		}
+
 		c = getch();
 
 		if (c == 97)
@@ -198,12 +190,28 @@ int main()
 		mvwaddch(win, player.getY(), player.getX(), *player.getType());
 		for (int i = 0; i < 50; ++i)
 		{
-			if (enemies.enemiesArray[i])
-				mvwaddch(win, enemies.enemiesArray[i]->getY(), enemies.enemiesArray[i]->getX(), *enemies.enemiesArray[i]->getType());
+			if (enemies.enemiesArray[i]) {
+				if (enemies.enemiesArray[i]->collision(player)) {
+					delete enemies.enemiesArray[i];
+					enemies.enemiesArray[i] = new Enemies();
+//					player.
+				}
+				else
+					mvwaddch(win, enemies.enemiesArray[i]->getY(), enemies.enemiesArray[i]->getX(), *enemies.enemiesArray[i]->getType());
+			}
 			else
 				break;
 
 		}
+//		for (int j = 0; j < 50; ++j)
+//		{
+//			if (enemies.enemiesArray[j] == NULL)
+//				break;
+//			if (enemies.enemiesArray[j]->collision(player)) {
+//				enemies.enemiesArray[j]->bam(j);
+//				//добавить на уменьшение здоровья игрока
+//			}
+//		}
 		make_frame(win, maxheight, maxwidth, '$');
 
 		usleep(100000);
@@ -212,7 +220,6 @@ int main()
 
 	}
 	endwin();
-
 
 	return 0;
 }
