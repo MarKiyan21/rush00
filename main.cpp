@@ -63,19 +63,12 @@ void	init_color(void)
 	init_pair(6, 5, 6);
 	init_pair(7, 5, 6);
 	init_pair(10, 5, 2);
-
-
-
-
-
-
-
 }
 
 void	max_win(int *maxheight, int *maxwidth)
 {
-	int t_maxh;
-	int t_maxw;
+	int		t_maxh;
+	int		t_maxw;
 
 	getmaxyx(stdscr, t_maxh, t_maxw);
 
@@ -103,23 +96,23 @@ void	make_clean_win(WINDOW *win, int maxheight, int maxwidth, char clean)
 
 void	make_frame(WINDOW * win, int maxheight, int maxwidth, char oldalchar)
 {
-	for(int i=0;i<maxwidth;i++)
+	for (int i = 0; i < maxwidth; i++)
 	{
-		wmove(win,0,i);
-		waddch(win,oldalchar);
+		wmove(win, 0, i);
+		waddch(win, oldalchar);
 	}
 
-	for(int i=0;i<maxheight;i++)
+	for (int i = 0; i < maxheight; i++)
 	{
 		wmove(win, i, 0);
 		waddch(win, oldalchar);
 	}
-	for(int i=0;i<maxwidth;i++)
+	for (int i = 0; i < maxwidth; i++)
 	{
 		wmove(win, maxheight-1,i);
 		waddch(win, oldalchar);
 	}
-	for(int i=0;i<maxheight;i++)
+	for (int i = 0; i < maxheight; i++)
 	{
 		wmove(win,i,maxwidth-1);
 		waddch(win, oldalchar);
@@ -132,12 +125,12 @@ int		main()
 	Enemies	enemies = Enemies();
 	Bullets bullets = Bullets();
 
-	int maxheight;
-	int maxwidth;
-	int	c = 0;
-	int timer = 0;
-	char buf[10];
-	int rhp;
+	int		maxheight;
+	int		maxwidth;
+	int		c = 0;
+	int		timer = 0;
+	char	buf[10];
+	int		rhp;
 
 	initscr();
 	WINDOW * win = newwin(H, W, 0, 0);
@@ -153,41 +146,22 @@ int		main()
 	{
 		enemies.createArray();
 
-//		if (c == 32)
-//			bullets.createArray(player.getX(), player.getY() - 1);
-//		if (timer % 10 == 0)
-//			enemies.move(0, 1);
-
-
-//		if (timer % 15 == 0)
-//		{
-//			enemies.move(0, 1);
-//			usleep(100);
-//		}
-
-
 		if (timer % 2 == 0)
 		{
-
 			enemies.move(0, 1);
 			usleep(50000);
-
 		}
-
 
 		c = getch();
 
-//		if (timer % 2 == 0)
-//		{
-			if (c == 97 || c == 260)
-				player.move(-1, 0);
-			else if (c == 100 || c == 261)
-				player.move(1, 0);
-			else if (c == 119 || c == 259)
-				player.move(0, -1);
-			else if (c == 115 || c == 258)
-				player.move(0, 1);
-//		}
+		if (c == 97 || c == 260)
+			player.move(-1, 0);
+		else if (c == 100 || c == 261)
+			player.move(1, 0);
+		else if (c == 119 || c == 259)
+			player.move(0, -1);
+		else if (c == 115 || c == 258)
+			player.move(0, 1);
 
 		max_win(&maxheight, &maxwidth);
 
@@ -211,7 +185,7 @@ int		main()
 					enemies.enemiesArray[i] = new Enemies();
 					if (player.getCHP() <= 0) {
 						while (1) {
-//
+
 							c = getch();
 
 
@@ -219,7 +193,7 @@ int		main()
 
 							make_clean_win(win, maxheight, maxwidth, ' ');
 							make_frame(win, maxheight, maxwidth, '$');
-//
+
 							mvwprintw(win, 0, 40, "time:");
 							mvwprintw(win, 0, 45, ft_itoa(timer, buf));
 							mvwprintw(win, 0, 60, "score:");
@@ -294,11 +268,9 @@ int		main()
 									 bullets.bulletsArray[j]->getY(),
 									 bullets.bulletsArray[j]->getX(),
 									 *bullets.bulletsArray[j]->getType());
-
 						}
 					}
 				}
-
 		}
 		wattron(win,COLOR_PAIR(1));
 		make_frame(win, maxheight, maxwidth, '$');
@@ -324,9 +296,8 @@ int		main()
 		timer += 1;
 		refresh();
 		wrefresh(win);
-//
+
 	}
 	endwin();
-
 	return 0;
 }

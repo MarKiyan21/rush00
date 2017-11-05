@@ -10,7 +10,7 @@
 # define H1 H-1
 # define W1 W-1
 # define B 200
-# define E 50
+# define E 200
 
 class	AEntities {
 
