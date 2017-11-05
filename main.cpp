@@ -54,11 +54,22 @@ char				*ft_itoa(int n, char *res)
 void	init_color(void)
 {
 	start_color();
+	init_pair(0, 1, 6);
 	init_pair(1, COLOR_RED, 6);
-	init_pair(2, 5, 2);
+	init_pair(2, 5, 6);
 	init_pair(3, 3, 6);
 	init_pair(4, 4, 6);
 	init_pair(5, 0, 6);
+	init_pair(6, 5, 6);
+	init_pair(7, 5, 6);
+	init_pair(10, 5, 2);
+
+
+
+
+
+
+
 }
 
 void	max_win(int *maxheight, int *maxwidth)
@@ -157,8 +168,10 @@ int		main()
 
 		if (timer % 2 == 0)
 		{
+
 			enemies.move(0, 1);
 			usleep(50000);
+
 		}
 
 
@@ -190,16 +203,19 @@ int		main()
 		{
 			if (enemies.enemiesArray[i]) {
 				if (*enemies.enemiesArray[i]->getType() != '.' && enemies.enemiesArray[i]->collision(player)) {
+					if (enemies.enemiesArray[i]->getN() == 1)
+						player.setCHP(5);
+					if (enemies.enemiesArray[i]->getN() == 2)
+						player.setCHP(-20);
 					delete enemies.enemiesArray[i];
 					enemies.enemiesArray[i] = new Enemies();
-					player.setCHP(-20);
 					if (player.getCHP() <= 0) {
 						while (1) {
 //
 							c = getch();
 
 
-							wattron(win,COLOR_PAIR(2));
+							wattron(win,COLOR_PAIR(10));
 
 							make_clean_win(win, maxheight, maxwidth, ' ');
 							make_frame(win, maxheight, maxwidth, '$');
@@ -214,6 +230,7 @@ int		main()
 							mvwprintw(win,H/2, W/2, "GAME OVER");
 							mvwprintw(win,H/2 + 1, W/2 - 3, "PRESS ESC TO EXIT");
 							mvwprintw(win,H/2 + 2, W/2 - 3, "PRESS r TO RETRY");
+							wattroff(win,COLOR_PAIR(10));
 							wrefresh(win);
 
 							if (c == 27) {
@@ -242,10 +259,20 @@ int		main()
 					}
 				}
 				else
-					mvwaddch(win, enemies.enemiesArray[i]->getY(), enemies.enemiesArray[i]->getX(), *enemies.enemiesArray[i]->getType());
+				{
+					rhp = rand() % 6;
+					wattron(win, COLOR_PAIR(rhp));
+					mvwaddch(win,
+							 enemies.enemiesArray[i]->getY(),
+							 enemies.enemiesArray[i]->getX(),
+							 *enemies.enemiesArray[i]->getType());
+					wattroff(win, COLOR_PAIR(rhp));
+				}
 			}
 
 		}
+
+		wattron(win,COLOR_PAIR(1));
 
 		mvwaddch(win, player.getY(), player.getX(), *player.getType());
 
