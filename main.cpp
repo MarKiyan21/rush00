@@ -3,7 +3,7 @@
 #include "Enemies.hpp"
 #include "Bullets.hpp"
 
-static int			num_symb(int n)
+int			num_symb(int n)
 {
 	int	len;
 
@@ -16,7 +16,7 @@ static int			num_symb(int n)
 	return (len);
 }
 
-static int			pow(int num, int len)
+int			pow(int num, int len)
 {
 	int res;
 

@@ -6,7 +6,7 @@
 #    By: akryvenk <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/13 11:21:19 by akryvenk          #+#    #+#              #
-#    Updated: 2017/11/05 19:45:22 by mkyianyt         ###   ########.fr        #
+#    Updated: 2017/11/05 19:56:50 by mkyianyt         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -30,4 +30,4 @@ clean:
 	@/bin/rm -f $(FILE_O)
 fclean: clean
 	@/bin/rm -f $(NAME)
-re: all
+re: fclean all
