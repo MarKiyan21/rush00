@@ -1,14 +1,13 @@
 #include "AEntities.hpp"
 
-AEntities::AEntities() : _x(0), _y(0), _live(true), _type('.') {}
-AEntities::AEntities(int x, int y) : _x(x), _y(y), _live(true), _type('.') {}
-AEntities::AEntities(AEntities const &rhs) : _x(rhs._x), _y(rhs._y), _live(rhs._live), _type(rhs._type) {}
+AEntities::AEntities() : _x(0), _y(0), _type('.') {}
+AEntities::AEntities(int x, int y) : _x(x), _y(y), _type('.') {}
+AEntities::AEntities(AEntities const &rhs) : _x(rhs._x), _y(rhs._y), _type(rhs._type) {}
 
 AEntities const	& AEntities::operator=(AEntities const &rhs) {
 	if (this != &rhs) {
 		_x = rhs._x;
 		_y = rhs._y;
-		_live = rhs._live;
 		_type = rhs._type;
 	}
 	return *this;

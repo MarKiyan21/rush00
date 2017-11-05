@@ -41,16 +41,16 @@ void	Bullets::setFlag() {
 }
 
 void	Bullets::initArray() {
-	for (int i = 0; i < 50; ++i)
+	for (int i = 0; i < 200; ++i)
 		bulletsArray[i] = NULL;
 }
 
 void	Bullets::createArray(int x, int y) {
-	if (getFlag()) {
-		initArray();
-		setFlag();
-	}
-	for (int i = 0; i < 50; ++i)
+//	if (getFlag()) {
+//		initArray();
+//		setFlag();
+//	}
+	for (int i = 0; i < 200; ++i)
 	{
 		if (bulletsArray[i] == NULL) {
 			bulletsArray[i] = new Bullets(x, y);
@@ -59,19 +59,20 @@ void	Bullets::createArray(int x, int y) {
 	}
 }
 
-void	Bullets::move(int x, int y) {
+void	Bullets::move(int x, int y, int p_X, int p_Y) {
 	x = -1;
 	y = x;
-	for (int i = 0; i < 50; ++i)
+	for (int i = 0; i < 200; ++i)
 	{
 		if (bulletsArray[i])
 		{
 			bulletsArray[i]->setY(y);
-			if (bulletsArray[i]->getY() == 5)
-//			{
+
+			if (bulletsArray[i]->getY() == H)
+			{
 				delete bulletsArray[i];
-//				bulletsArray[i] = new Bullets(x, y);
-//			}
+				bulletsArray[i] = new Bullets(p_X, p_Y - 1);
+			}
 		}
 	}
 }
