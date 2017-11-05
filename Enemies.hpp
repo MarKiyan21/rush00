@@ -2,6 +2,7 @@
 # define ENEMIES_HPP
 
 # include "AEntities.hpp"
+# include "Player.hpp"
 
 class Enemies : public AEntities {
 
@@ -17,6 +18,8 @@ public:
 	Enemies	*enemiesArray[50];
 	void	initArray();
 	void	createEnemy();
+//	bool	collision(Player*&);
+	void	bam(int);
 	bool	getFlag();
 	void	setFlag();
 

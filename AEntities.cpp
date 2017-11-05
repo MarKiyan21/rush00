@@ -40,6 +40,6 @@ char *	AEntities::getType() {
 	return &this->_type;
 }
 
-bool	AEntities::collision(AEntities* &elem) {
-	return (_x == elem->getX() && _y == elem->getY());
+bool	AEntities::collision(AEntities &elem) {
+	return (_x == elem.getX() && _y == elem.getY());
 }

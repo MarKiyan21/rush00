@@ -46,6 +46,7 @@ void	Enemies::initArray() {
 }
 
 void	Enemies::createEnemy() {
+	char	type[2] = {'*', '^'};
 	if (getFlag()) {
 		initArray();
 		setFlag();
@@ -53,7 +54,7 @@ void	Enemies::createEnemy() {
 	for (int i = 0; i < 50; ++i)
 	{
 		if (enemiesArray[i] == NULL) {
-			enemiesArray[i] = new Enemies(0, 0, _type);
+			enemiesArray[i] = new Enemies(0, 0, type[rand() % 2]);
 			return;
 		}
 	}
@@ -74,3 +75,18 @@ void	Enemies::move(int x, int y) {
 		}
 	}
 }
+
+void	Enemies::bam(int index) {
+	for (int i = 0; i < 50; ++i)
+	{
+		if (enemiesArray[i])
+			if (i == index) {
+				delete enemiesArray[i];
+				enemiesArray[i] = new Enemies();
+			}
+	}
+}
+
+//bool	Enemies::collision(Player* &elem) {
+//	return (_x == elem->getX() && _y == elem->getY());
+//}
