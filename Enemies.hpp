@@ -14,17 +14,9 @@ public:
 
 	Enemies const	&operator=(Enemies const &rhs);
 	void	move(int x, int y);
-	Enemies	*enemiesArray[50];
+	Enemies	*enemiesArray[E];
 	void	initArray();
 	void	createArray();
-	bool	getFlag();
-	int		getN();
-	void	setFlag();
-
-private:
-	static bool	_flag;
-	int 		_n;
-
 };
 
 #endif

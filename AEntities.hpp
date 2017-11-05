@@ -9,6 +9,8 @@
 # define W 150
 # define H1 H-1
 # define W1 W-1
+# define B 200
+# define E 50
 
 class	AEntities {
 

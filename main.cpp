@@ -147,7 +147,7 @@ int		main()
 	init_color();
 
 	bullets.initArray();
-
+	enemies.initArray();
 
 	while (c != 27)
 	{
@@ -194,18 +194,18 @@ int		main()
 		wattron(win,COLOR_PAIR(1));
 
 		if (c == 32)
-			bullets.createArray(player.getX(), player.getY());
+			bullets.createArray(player.getX(), player.getY() - 1);
 		if (timer % 2 == 0)
 			bullets.move(0, 0);
 
 		make_clean_win(win, maxheight, maxwidth, ' ');
-		for (int i = 0; i < 50; ++i)
+		for (int i = 0; i < E; ++i)
 		{
 			if (enemies.enemiesArray[i]) {
 				if (*enemies.enemiesArray[i]->getType() != '.' && enemies.enemiesArray[i]->collision(player)) {
-					if (enemies.enemiesArray[i]->getN() == 1)
+					if (*enemies.enemiesArray[i]->getType() == '*')
 						player.setCHP(5);
-					if (enemies.enemiesArray[i]->getN() == 2)
+					if (*enemies.enemiesArray[i]->getType() == '^')
 						player.setCHP(-20);
 					delete enemies.enemiesArray[i];
 					enemies.enemiesArray[i] = new Enemies();
@@ -266,7 +266,6 @@ int		main()
 							 enemies.enemiesArray[i]->getY(),
 							 enemies.enemiesArray[i]->getX(),
 							 *enemies.enemiesArray[i]->getType());
-					wattroff(win, COLOR_PAIR(rhp));
 				}
 			}
 
@@ -276,9 +275,9 @@ int		main()
 
 		mvwaddch(win, player.getY(), player.getX(), *player.getType());
 
-		for (int j = 0; j < 200; ++j) {
+		for (int j = 0; j < B; ++j) {
 			if (bullets.bulletsArray[j])
-				for (int k = 0; k < 50; ++k) {
+				for (int k = 0; k < E; ++k) {
 					if (enemies.enemiesArray[k]) {
 						if (*enemies.enemiesArray[k]->getType() != '.' && bullets.bulletsArray[j]->collision(*enemies.enemiesArray[k])) {
 							player.setPoints(5);
@@ -289,21 +288,24 @@ int		main()
 							break;
 						}
 						else
-							mvwaddch(win, bullets.bulletsArray[j]->getY(), bullets.bulletsArray[j]->getX(), *bullets.bulletsArray[j]->getType());
+						{
+							wattron(win, COLOR_PAIR(3));
+							mvwaddch(win,
+									 bullets.bulletsArray[j]->getY(),
+									 bullets.bulletsArray[j]->getX(),
+									 *bullets.bulletsArray[j]->getType());
+
+						}
 					}
 				}
 
 		}
+		wattron(win,COLOR_PAIR(1));
 		make_frame(win, maxheight, maxwidth, '$');
-
-		wattroff(win,COLOR_PAIR(1));
-
-
 		wattron(win,COLOR_PAIR(3));
 		mvwprintw(win, 0, 40, "time:");
 		mvwprintw(win, 0, 45, ft_itoa(timer, buf));
 		wattroff(win,COLOR_PAIR(3));
-
 		wattron(win,COLOR_PAIR(4));
 		mvwprintw(win, 0, 60, "score:");
 		mvwprintw(win, 0, 66, ft_itoa(player.getPoints(), buf));
@@ -314,6 +316,9 @@ int		main()
 		mvwprintw(win, 0, 80, "hp:");
 		mvwprintw(win, 0, 83, ft_itoa(player.getCHP(), buf));
 		wattroff(win,COLOR_PAIR(5));
+
+		wattron(win,COLOR_PAIR(1));
+		mvwprintw(win, H-1, W-1, "$");
 
 		usleep(10000);
 		timer += 1;

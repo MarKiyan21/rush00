@@ -3,7 +3,7 @@
 Player::Player() : AEntities() {
 	this->_x = W/2;
 	this->_y = H - 2;
-	this->_type = '0';
+	this->_type = 'A';
 	this->_cHP = 100;
 	this->_mHP = 100;
 	this->_points = 0;
@@ -11,7 +11,7 @@ Player::Player() : AEntities() {
 Player::Player(int x, int y) : AEntities(x, y) {
 	this->_x = W/2;
 	this->_y = H - 2;
-	this->_type = '0';
+	this->_type = 'A';
 	this->_cHP = 100;
 	this->_mHP = 100;
 	this->_points = 0;

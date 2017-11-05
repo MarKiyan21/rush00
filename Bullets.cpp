@@ -3,12 +3,12 @@
 Bullets::Bullets() : AEntities() {
 	this->_x = 0;
 	this->_y = 0;
-	this->_type = 'o';
+	this->_type = '|';
 }
 Bullets::Bullets(int x, int y) : AEntities(x, y) {
 	this->_x = x;
 	this->_y = y;
-	this->_type = 'o';
+	this->_type = '|';
 }
 Bullets::Bullets(Bullets const &rhs) : AEntities(rhs) {
 	this->_x = rhs.getY();
@@ -28,12 +28,12 @@ Bullets const & Bullets::operator=(Bullets const &rhs) {
 }
 
 void	Bullets::initArray() {
-	for (int i = 0; i < 200; ++i)
+	for (int i = 0; i < B; ++i)
 		bulletsArray[i] = NULL;
 }
 
 void	Bullets::createArray(int x, int y) {
-	for (int i = 0; i < 200; ++i)
+	for (int i = 0; i < B; ++i)
 	{
 		if (bulletsArray[i] == NULL) {
 			bulletsArray[i] = new Bullets(x, y);
@@ -45,7 +45,7 @@ void	Bullets::createArray(int x, int y) {
 void	Bullets::move(int x, int y) {
 	x = -1;
 	y = x;
-	for (int i = 0; i < 200; ++i)
+	for (int i = 0; i < B; ++i)
 	{
 		if (bulletsArray[i])
 		{

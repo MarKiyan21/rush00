@@ -14,7 +14,7 @@ public:
 
 	Bullets const	&operator=(Bullets const &rhs);
 	void	move(int, int);
-	Bullets	*bulletsArray[200];
+	Bullets	*bulletsArray[B];
 	void	initArray();
 	void	createArray(int, int);
 

@@ -1,18 +1,18 @@
 #include "Enemies.hpp"
-
-bool	Enemies::_flag = true;
+//
+//bool	Enemies::_flag = true;
 
 Enemies::Enemies() : AEntities() {
 	char	tab[3] = {'.', '*', '^'};
 	this->_x = rand() % W;
 	this->_y = 0;
 	this->_type = tab[rand() % 3];
-	if(_type == '*')
-		_n = 1;
-	else if(_type == '^')
-		_n = 2;
-	else
-		_n = 0;
+//	if(_type == '*')
+//		_n = 1;
+//	else if(_type == '^')
+//		_n = 2;
+//	else
+//		_n = 0;
 
 
 
@@ -39,12 +39,12 @@ Enemies::Enemies(int x, int y) : AEntities(x, y) {
 	this->_x = rand() % W;
 	this->_y = 0;
 	this->_type = tab[rand() % 3];
-	if(_type == '*')
-		_n = 1;
-	else if(_type == '^')
-		_n = 2;
-	else
-		_n = 0;
+//	if(_type == '*')
+//		_n = 1;
+//	else if(_type == '^')
+//		_n = 2;
+//	else
+//		_n = 0;
 
 
 }
@@ -52,7 +52,7 @@ Enemies::Enemies(Enemies const &rhs) : AEntities(rhs) {
 	this->_x = rhs.getY();
 	this->_y = rhs.getY();
 	this->_type = rhs._type;
-	this->_n = rhs._n;
+//	this->_n = rhs._n;
 }
 
 Enemies::~Enemies() {}
@@ -65,29 +65,29 @@ Enemies const & Enemies::operator=(Enemies const &rhs) {
 	}
 	return *this;
 }
-
-bool	Enemies::getFlag() {
-	return Enemies::_flag;
-}
-
-void	Enemies::setFlag() {
-	if (Enemies::_flag)
-		Enemies::_flag = false;
-	else
-		Enemies::_flag = true;
-}
+//
+//bool	Enemies::getFlag() {
+//	return Enemies::_flag;
+//}
+//
+//void	Enemies::setFlag() {
+//	if (Enemies::_flag)
+//		Enemies::_flag = false;
+//	else
+//		Enemies::_flag = true;
+//}
 
 void	Enemies::initArray() {
-	for (int i = 0; i < 50; ++i)
+	for (int i = 0; i < E; ++i)
 		enemiesArray[i] = NULL;
 }
 
 void	Enemies::createArray() {
-	if (getFlag()) {
-		initArray();
-		setFlag();
-	}
-	for (int i = 0; i < 50; ++i)
+//	if (getFlag()) {
+//		initArray();
+//		setFlag();
+//	}
+	for (int i = 0; i < E; ++i)
 	{
 		if (enemiesArray[i] == NULL) {
 			enemiesArray[i] = new Enemies();
@@ -95,13 +95,13 @@ void	Enemies::createArray() {
 		}
 	}
 }
-
-int		Enemies::getN() {
-	return this->_n;
-}
+//
+//int		Enemies::getN() {
+//	return this->_n;
+//}
 
 void	Enemies::move(int x, int y) {
-	for (int i = 0; i < 50; ++i)
+	for (int i = 0; i < E; ++i)
 	{
 		if (enemiesArray[i])
 		{
