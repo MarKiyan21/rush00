@@ -47,7 +47,7 @@ void	Enemies::initArray() {
 		enemiesArray[i] = NULL;
 }
 
-void	Enemies::createEnemy() {
+void	Enemies::createArray() {
 	if (getFlag()) {
 		initArray();
 		setFlag();
@@ -55,7 +55,7 @@ void	Enemies::createEnemy() {
 	for (int i = 0; i < 50; ++i)
 	{
 		if (enemiesArray[i] == NULL) {
-			enemiesArray[i] = new Enemies(0, 0);
+			enemiesArray[i] = new Enemies();
 			return;
 		}
 	}
@@ -76,18 +76,3 @@ void	Enemies::move(int x, int y) {
 		}
 	}
 }
-
-//void	Enemies::bam(int index) {
-////	for (int i = 0; i < 50; ++i)
-////	{
-//		if (enemiesArray[index]) {
-////			if (i == index) {
-//				delete enemiesArray[index];
-//				enemiesArray[index] = new Enemies();
-//		}
-////	}
-//}
-
-//bool	Enemies::collision(Player* &elem) {
-//	return (_x == elem->getX() && _y == elem->getY());
-//}

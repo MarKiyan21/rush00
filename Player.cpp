@@ -50,3 +50,12 @@ void	Player::move(int x, int y) {
 		this->_y = 1;
 }
 
+void	Player::setCHP(int number) {
+	this->_cHP += number;
+	if (this->_cHP >= this->_mHP)
+		this->_cHP = this->_mHP;
+}
+
+int		Player::getCHP() const {
+	return this->_cHP;
+}

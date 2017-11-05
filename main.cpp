@@ -1,6 +1,7 @@
 #include "AEntities.hpp"
 #include "Player.hpp"
 #include "Enemies.hpp"
+#include "Bullets.hpp"
 
 void	make_clean_win(WINDOW *win, int maxheight, int maxwidth, char clean)
 {
@@ -38,114 +39,11 @@ void	make_frame(WINDOW * win, int maxheight, int maxwidth, char oldalchar)
 	}
 }
 
-//int		main()
-//{
-//	Player	player = Player();
-//
-//	initscr();
-//	noecho();
-////	start_color();
-//	int		c = 0;
-////	int		maxh;
-////	int 	maxw;
-//	WINDOW	*win;
-//	win = newwin(H, W, 0, 0);
-//	while (1) {
-//		make_frame(win, H, W, '$');
-//		c = getch();
-////		wrefresh(win);
-//
-//		if (c == 27)
-//			exit(0);
-//		else if (c == 97)
-//			player.move(-1, 0);
-//		else if (c == 100)
-//			player.move(1, 0);
-//		else if (c == 119)
-//			player.move(0, -1);
-//		else if (c == 115)
-//			player.move(0, 1);
-//
-//		make_clean_win(win, H, W, ' ');
-//
-////		mvwaddch(win, player.getY(), player.getX(), (chtype)player.getType());
-//		mvwprintw(win, player.getY(), player.getX(), player.getType());
-//
-//
-//
-//
-//
-//		usleep(10000);
-////		refresh();
-//		wrefresh(win);
-//		make_clean_win(win, maxw, maxh, ' ');
-////		mvprintw(0, 0, "Keycode: %d, and the character: %c", c, c);
-//		mvprintw(player.getY(), player.getX(), player.getType());
-
-
-//		wrefresh(win);
-//	}
-//	delwin(win);
-//	refresh();
-////	getch();
-//	endwin();
-//	return 0;
-//}
-
-
-
-//make_clean_win(win, maxheight, maxwidth, ' ');
-
-//		mvwaddch(win, player.getY(), player.getX(), (chtype)player.getType());
-//mvwprintw(win, player.getY(), player.getX(), player.getType());
-
-
-//make_frame(win, maxheight, maxwidth, oldalchar);
-
-
-//usleep(10000);
-//refresh();
-//wrefresh(win);
-
-//void make_clean_win(WINDOW *win, int maxheight, int maxwidth, char clean)
-//{
-//	for (int i = 0; i < maxheight; ++i)
-//	{
-//		for (int j = 0; j < maxwidth; ++j)
-//		{
-//			mvwaddch(win, i, j, clean);
-//		}
-//	}
-//}
-//
-//void make_frame(WINDOW * win, int maxheight, int maxwidth, char oldalchar)
-//{
-//	for(int i=0;i<maxwidth;i++)
-//	{
-//		wmove(win,0,i);
-//		waddch(win,oldalchar);
-//	}
-//
-//	for(int i=0;i<maxheight;i++)
-//	{
-//		wmove(win, i, 0);
-//		waddch(win, oldalchar);
-//	}
-//	for(int i=0;i<maxwidth;i++)
-//	{
-//		wmove(win, maxheight-1,i);
-//		waddch(win, oldalchar);
-//	}
-//	for(int i=0;i<maxheight;i++)
-//	{
-//		wmove(win,i,maxwidth-1);
-//		waddch(win, oldalchar);
-//	}
-//}
-
-int main()
+int		main()
 {
 	Player	player = Player();
+	Enemies	enemies = Enemies();
+	Bullets bullets = Bullets();
 
 	int maxheight;
 	int maxwidth;
@@ -153,25 +51,28 @@ int main()
 	int t_maxw;
 	int	c = 0;
 
-	Enemies	enemies = Enemies();
 	initscr();
 	WINDOW * win = newwin(H, W, 0, 0);
 	nodelay(stdscr,true);
 	noecho();
+	keypad(stdscr, true);
 	while (c != 27)
 	{
-		enemies.createEnemy();
+		enemies.createArray();
+		if (c == KEY_MOUSE)
+			bullets.createArray(player.getX(), player.getY() - 1);
 		enemies.move(0, 1);
+		bullets.move(0, 0);
 
 		c = getch();
 
-		if (c == 97)
+		if (c == 97 || c == 260)
 			player.move(-1, 0);
-		else if (c == 100)
+		else if (c == 100 || c == 261)
 			player.move(1, 0);
-		else if (c == 119)
+		else if (c == 119 || c == 259)
 			player.move(0, -1);
-		else if (c == 115)
+		else if (c == 115 || c == 258)
 			player.move(0, 1);
 
 		getmaxyx(stdscr,t_maxh,t_maxw);
@@ -194,7 +95,9 @@ int main()
 				if (enemies.enemiesArray[i]->collision(player)) {
 					delete enemies.enemiesArray[i];
 					enemies.enemiesArray[i] = new Enemies();
-//					player.
+					player.setCHP(-20);
+//					if (player.getCHP() == 0)  сделать выход из игры
+//						exit(0);
 				}
 				else
 					mvwaddch(win, enemies.enemiesArray[i]->getY(), enemies.enemiesArray[i]->getX(), *enemies.enemiesArray[i]->getType());
@@ -203,15 +106,6 @@ int main()
 				break;
 
 		}
-//		for (int j = 0; j < 50; ++j)
-//		{
-//			if (enemies.enemiesArray[j] == NULL)
-//				break;
-//			if (enemies.enemiesArray[j]->collision(player)) {
-//				enemies.enemiesArray[j]->bam(j);
-//				//добавить на уменьшение здоровья игрока
-//			}
-//		}
 		make_frame(win, maxheight, maxwidth, '$');
 
 		usleep(100000);

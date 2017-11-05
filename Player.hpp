@@ -14,7 +14,8 @@ public:
 
 	Player const	&operator=(Player const &rhs);
 	void	move(int x, int y);
-//	int		get
+	int		getCHP(void) const;
+	void	setCHP(int);
 
 private:
 	int		_cHP;
